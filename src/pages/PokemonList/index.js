@@ -1,9 +1,13 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getPokemonListAsync, selectPokemon } from 'services/pokemon';
+import {
+  getPokemonListAsync,
+  setCurrentPage,
+  selectPokemon,
+} from 'services/pokemon';
 
 import { LoadingOutlined, LinkOutlined } from '@ant-design/icons';
-import { Button, Tag } from 'antd';
+import { Tag, Pagination } from 'antd';
 
 import PokemonCard from 'components/PokemonCard';
 import pokeball from 'images/pokeball.png';
@@ -13,20 +17,18 @@ import * as S from './styles';
 function PokemonList() {
   const dispatch = useDispatch();
   const pokemon = useSelector(selectPokemon);
-  const { isLoading, pokemonList } = pokemon;
+  const { isLoading, pokemonList, totalCount, currentPage } = pokemon;
 
   useEffect(() => {
-    const API = 'https://pokeapi.co/api/v2';
     if (pokemonList.length === 0) {
-      dispatch(getPokemonListAsync(`${API}/pokemon`));
-    } 
+      dispatch(getPokemonListAsync(0));
+    }
   }, [dispatch, pokemonList.length]);
 
-  const handleNext = () => {
-    dispatch(getPokemonListAsync(pokemon.nextUrl));
-  };
-  const handlePrev = () => {
-    dispatch(getPokemonListAsync(pokemon.prevUrl));
+  const onPageChange = (pageNumber) => {
+    const offset = (pageNumber - 1) * 20;
+    dispatch(getPokemonListAsync(offset));
+    dispatch(setCurrentPage(pageNumber));
   };
 
   return (
@@ -38,26 +40,13 @@ function PokemonList() {
             Poke<span>DEX</span>
           </h1>
         </aside>
-        <div className="btn-group">
-          <Button
-            type="primary"
-            shape="round"
-            size="large"
-            onClick={handlePrev}
-            disabled={pokemon.prevUrl === null}
-          >
-            Previous
-          </Button>
-          <span className="divider"></span>
-          <Button
-            type="primary"
-            shape="round"
-            size="large"
-            onClick={handleNext}
-          >
-            Next
-          </Button>
-        </div>
+        <Pagination
+          current={currentPage}
+          total={totalCount}
+          defaultPageSize={20}
+          onChange={onPageChange}
+          showSizeChanger={false}
+        />
       </header>
       <section>
         {isLoading ? (
@@ -73,35 +62,22 @@ function PokemonList() {
         )}
       </section>
       <footer>
+        <Pagination
+          current={currentPage}
+          total={totalCount}
+          defaultPageSize={20}
+          onChange={onPageChange}
+          showSizeChanger={false}
+        />
         <Tag icon={<LinkOutlined />} color="magenta">
           <a
             href="https://pokeapi.co/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            API Source: https://pokeapi.co/
+            Source API: https://pokeapi.co/
           </a>
         </Tag>
-        <div className="btn-group">
-          <Button
-            type="primary"
-            shape="round"
-            size="large"
-            onClick={handlePrev}
-            disabled={pokemon.prevUrl === null}
-          >
-            Previous
-          </Button>
-          <span className="divider"></span>
-          <Button
-            type="primary"
-            shape="round"
-            size="large"
-            onClick={handleNext}
-          >
-            Next
-          </Button>
-        </div>
       </footer>
     </S.Wrapper>
   );

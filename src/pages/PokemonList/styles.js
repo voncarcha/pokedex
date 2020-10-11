@@ -8,32 +8,17 @@ export const Wrapper = styled.div`
     padding: 40px 20px;
   }
 
-  .btn-group {
-    display: flex;
-    align-items: center;
-    @media (max-width: 600px) {
-      margin: 20px 0;
-    }
-    .divider {
-      width: 20px;
-      display: block;
-    }
-    button {
-      width: 120px;
-    }
-  }
   > header {
     margin: 0 auto 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     max-width: 1200px;
-    @media (max-width: 600px) {
-      flex-direction: column;
-    }
+    flex-direction: column;
     aside {
       display: flex;
       align-items: center;
+      margin-bottom: 30px;
 
       img {
         width: 50px;
@@ -75,19 +60,14 @@ export const Wrapper = styled.div`
   > footer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    flex-direction: column;
     margin: 30px auto 0;
     width: 100%;
     max-width: 1200px;
-    @media (max-width: 600px) {
-      flex-direction: column;
 
-      .ant-tag {
-        order: 1;
-      }
-      .btn-group {
-        order: 0;
-      }
+    .ant-tag {
+      margin-top: 20px;
     }
   }
 `;

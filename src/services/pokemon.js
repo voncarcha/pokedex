@@ -8,8 +8,8 @@ export const pokemonSlice = createSlice({
   initialState: {
     isLoading: true,
     pokemonList: [],
-    nextUrl: '',
-    prevUrl: '',
+    totalCount: 0,
+    currentPage: 1,
     selectedPokemon: {},
   },
   reducers: {
@@ -19,11 +19,11 @@ export const pokemonSlice = createSlice({
     setPokemonList: (state, action) => {
       state.pokemonList = action.payload;
     },
-    setNextUrl: (state, action) => {
-      state.nextUrl = action.payload;
+    setTotalCount: (state, action) => {
+      state.totalCount = action.payload;
     },
-    setPrevUrl: (state, action) => {
-      state.prevUrl = action.payload;
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
     },
     setSelectedPokemon: (state, action) => {
       state.selectedPokemon = action.payload;
@@ -34,17 +34,17 @@ export const pokemonSlice = createSlice({
 export const {
   setLoading,
   setPokemonList,
-  setNextUrl,
-  setPrevUrl,
   setSelectedPokemon,
+  setTotalCount,
+  setCurrentPage,
 } = pokemonSlice.actions;
 
-export function getPokemonListAsync(apiUrl) {
+export function getPokemonListAsync(offset) {
   return async (dispatch, getState) => {
     try {
       dispatch(setLoading(true));
 
-      const res = await axios.get(apiUrl);
+      const res = await axios.get(`${API}/pokemon/?offset=${offset}&limit=20`);
 
       let _pokemonData = await Promise.all(
         res.data.results.map(async (pokemon) => {
@@ -53,14 +53,12 @@ export function getPokemonListAsync(apiUrl) {
           return { name, id, types, sprites };
         }),
       );
+
       dispatch(setPokemonList(_pokemonData));
-
-      dispatch(setNextUrl(res.data.next));
-      dispatch(setPrevUrl(res.data.previous));
-
+      dispatch(setTotalCount(res.data.count));
       dispatch(setLoading(false));
-    } catch (err) {
-      console.error('error');
+    } catch (error) {
+      throw Error(error);
     }
   };
 }
@@ -100,11 +98,12 @@ export function getPokemonDataAsync(url) {
           description,
           artwork,
           spriteFront,
+          sprites
         }),
       );
       dispatch(setLoading(false));
     } catch (error) {
-      console.error('error');
+      throw Error(error);
     }
   };
 }

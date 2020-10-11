@@ -9,6 +9,7 @@ import PokemonList from 'pages/PokemonList';
 import PokemonData from 'pages/PokemonData';
 
 function App() {
+  console.log(process.env.REACT_APP_BASE_NAME);
   return (
     <div className="app">
       <Router basename={process.env.REACT_APP_BASE_NAME}>

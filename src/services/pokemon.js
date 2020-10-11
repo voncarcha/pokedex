@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API = process.env.REACT_APP_API;
+const API = 'https://pokeapi.co/api/v2';
 
 export const pokemonSlice = createSlice({
   name: 'pokemon',
@@ -71,23 +71,35 @@ export function getPokemonDataAsync(url) {
       dispatch(setLoading(true));
       const res = await axios.get(`${API}/pokemon${url}`);
       const pokemonData = res.data;
-      const { name, id, sprites, stats, weight, types, species, height } = pokemonData;
+      const {
+        name,
+        id,
+        sprites,
+        stats,
+        weight,
+        types,
+        species,
+        height,
+      } = pokemonData;
 
       let pokemonSpecies = await axios.get(species.url);
       let flavorTextEntries = pokemonSpecies.data.flavor_text_entries;
       let flavorText = flavorTextEntries.find((i) => i.language.name === 'en');
       let description = flavorText.flavor_text;
+      let artwork = sprites.other['official-artwork'].front_default;
+      let spriteFront = sprites.front_default;
 
       dispatch(
         setSelectedPokemon({
           name,
           id,
-          sprites,
           stats,
           weight,
           height,
           types,
           description,
+          artwork,
+          spriteFront,
         }),
       );
       dispatch(setLoading(false));

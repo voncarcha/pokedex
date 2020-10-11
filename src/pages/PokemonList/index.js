@@ -16,9 +16,11 @@ function PokemonList() {
   const { isLoading, pokemonList } = pokemon;
 
   useEffect(() => {
-    const API = process.env.REACT_APP_API;
-    dispatch(getPokemonListAsync(`${API}/pokemon`));
-  }, [dispatch]);
+    const API = 'https://pokeapi.co/api/v2';
+    if (pokemonList.length === 0) {
+      dispatch(getPokemonListAsync(`${API}/pokemon`));
+    } 
+  }, [dispatch, pokemonList.length]);
 
   const handleNext = () => {
     dispatch(getPokemonListAsync(pokemon.nextUrl));

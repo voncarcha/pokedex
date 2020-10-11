@@ -33,7 +33,7 @@ function PokemonData() {
   const getPokemonImage = () => {
     const artwork = sprites.other['official-artwork'].front_default;
 
-    if (artwork !== null && sprites.other) {
+    if (sprites.other) {
       return artwork;
     }
     return sprites.front_default;

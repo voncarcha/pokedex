@@ -46,6 +46,7 @@ function PokemonList() {
           defaultPageSize={20}
           onChange={onPageChange}
           showSizeChanger={false}
+          responsive={true}
         />
       </header>
       <section>
@@ -68,6 +69,7 @@ function PokemonList() {
           defaultPageSize={20}
           onChange={onPageChange}
           showSizeChanger={false}
+          responsive={true}
         />
         <Tag icon={<LinkOutlined />} color="magenta">
           <a

@@ -5,8 +5,6 @@ import { useHistory } from 'react-router-dom';
 import { TYPE_COLORS } from 'styles/colors';
 import { Tag, Button, Tooltip, Progress } from 'antd';
 import { LoadingOutlined, LeftOutlined } from '@ant-design/icons';
-import ReactImageFallback from 'react-image-fallback';
-import pokeball from 'images/pokeball.png';
 
 import * as S from './styles';
 
@@ -33,8 +31,10 @@ function PokemonData() {
   const getPokemonImage = () => {
     const artwork = sprites.other['official-artwork'].front_default;
 
-    if (sprites.other) {
-      return artwork;
+    if (sprites) {
+      if (sprites.other) {
+        return artwork;
+      }
     }
     return sprites.front_default;
   };
@@ -65,16 +65,7 @@ function PokemonData() {
           <S.Content>
             <header>
               <figure>
-                <ReactImageFallback
-                  src={getPokemonImage()}
-                  fallbackImage={pokeball}
-                  initialImage={
-                    <S.ImageLoader>
-                      <LoadingOutlined className="loader" />
-                    </S.ImageLoader>
-                  }
-                  alt={name}
-                />
+                <img src={getPokemonImage()} alt=""/>
               </figure>
               <article>
                 <h3>{description}</h3>

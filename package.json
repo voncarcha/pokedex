@@ -28,6 +28,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "homepage": "https://voncarcha.github.io/pokedex/",
   "browserslist": {
     "production": [
       ">0.2%",

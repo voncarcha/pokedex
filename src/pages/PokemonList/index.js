@@ -32,7 +32,7 @@ function PokemonList() {
   };
 
   return (
-    <S.Wrapper>
+    <S.Wrapper data-testid="pokemon-list">
       <header>
         <aside>
           <img src={pokeball} alt="" />
@@ -55,11 +55,11 @@ function PokemonList() {
             <LoadingOutlined className="loader" />
           </S.Loader>
         ) : (
-          <div className="pokemon-list">
+          <ul className="pokemon-list">
             {pokemonList.map((pokemon) => (
               <PokemonCard key={pokemon.name} pokemon={pokemon} />
             ))}
-          </div>
+          </ul>
         )}
       </section>
       <footer>

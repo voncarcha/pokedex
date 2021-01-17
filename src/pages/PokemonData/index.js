@@ -32,7 +32,7 @@ function PokemonData() {
   } = pokemonState.selectedPokemon;
 
   return (
-    <S.Wrapper>
+    <S.Wrapper >
       {pokemonState.isLoading ? (
         <S.Loader>
           <LoadingOutlined className="loader" />
@@ -46,6 +46,7 @@ function PokemonData() {
                   shape="circle"
                   icon={<LeftOutlined />}
                   onClick={() => history.goBack()}
+                  className="btn-go-back"
                 />
               </Tooltip>
               <h2>

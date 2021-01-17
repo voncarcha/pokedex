@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.li`
   @media (max-width: 600px) {
     max-width: 350px;
     width: 100%;

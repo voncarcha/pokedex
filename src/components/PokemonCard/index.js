@@ -17,8 +17,8 @@ function PokemonCard({ pokemon }) {
   const { name, sprites, types, id } = pokemon;
 
   return (
-    <Link to={`/${id}`}>
-      <S.Wrapper>
+    <S.Wrapper>
+      <Link to={`/${id}`} className="link-btn">
         <Card
           hoverable
           cover={
@@ -45,8 +45,8 @@ function PokemonCard({ pokemon }) {
             </div>
           </Skeleton>
         </Card>
-      </S.Wrapper>
-    </Link>
+      </Link>
+    </S.Wrapper>
   );
 }
 
